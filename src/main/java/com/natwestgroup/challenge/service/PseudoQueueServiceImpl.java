@@ -1,11 +1,16 @@
 package com.natwestgroup.challenge.service;
 
+import java.util.Arrays;
 import java.util.Base64;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +23,7 @@ import com.natwestgroup.challenge.message.TrxnRequestBody;
 public class PseudoQueueServiceImpl implements PseudoQueueService {
 	private static final Logger LOGGER = LogManager.getLogger(PseudoQueueServiceImpl.class);
 	
-	@Value("${receiver.uri}:{null}")
+	@Value("${receiver.uri:#{null}}")
 	private String URI;
 	
 	@Autowired
@@ -42,17 +47,25 @@ public class PseudoQueueServiceImpl implements PseudoQueueService {
 			encryptedReq.setType(encodeString(request.getType()));
 			encryptedReq.setCurrency(encodeString(request.getCurrency()));
 			
-			LOGGER.info("processSenderRequest(): Data Encrypted successfully, going to hit Receiver API");
-
-		    RestTemplate restTemplate = new RestTemplate();
-		    String result = restTemplate.postForObject(URI, encryptedReq, String.class);
-		   //  jsonResponse = 
-		    
+			LOGGER.info("processSenderRequest(): Data Encrypted successfully, going to hit Receiver API==> URL: "+URI);
+			RestTemplate restTemplate = new RestTemplate();
 		    try {
-               // jsonResponse = new JSONObject(result);
+
+			      HttpHeaders headers = new HttpHeaders();
+			      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			      HttpEntity<TrxnRequestBody> entity = new HttpEntity<TrxnRequestBody>(encryptedReq,headers);
+
+			      String response  = restTemplate.exchange(
+			    		  URI, HttpMethod.POST, entity, String.class).getBody();
+			      
+			      LOGGER.info("processSenderRequest(): Receiver API response= "+response);
+			      if(response.contains("success")) {
+						res.setResult("success");
+						res.setResultCode(0);
+			      }
                 
 		    } catch (Exception e) {
-		    	LOGGER.info("processSenderRequest(): JSON Exception");
+		    	LOGGER.info("processSenderRequest(): API Exception: "+e);
 		    	e.printStackTrace();
 		    }
 						

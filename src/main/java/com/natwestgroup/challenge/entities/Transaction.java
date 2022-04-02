@@ -12,8 +12,8 @@ import javax.persistence.Table;
 public class Transaction {
 
 @Id 
-@GeneratedValue(strategy=GenerationType.AUTO)
-private String id;
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
 
 @Column(name="account_number")
 private String accountNumber;
@@ -34,7 +34,7 @@ public Transaction() {
 	
 }
 
-public Transaction(String id, String accountNumber, String type, String amount, String currency, String accountFrom) {
+public Transaction(int id, String accountNumber, String type, String amount, String currency, String accountFrom) {
 	super();
 	this.id = id;
 	this.accountNumber = accountNumber;
@@ -44,11 +44,11 @@ public Transaction(String id, String accountNumber, String type, String amount, 
 	this.accountFrom = accountFrom;
 }
 
-public String getId() {
+public int getId() {
 	return id;
 }
 
-public void setId(String id) {
+public void setId(int id) {
 	this.id = id;
 }
 
@@ -90,6 +90,12 @@ public String getAccountFrom() {
 
 public void setAccountFrom(String accountFrom) {
 	this.accountFrom = accountFrom;
+}
+
+@Override
+public String toString() {
+	return "Transaction [id=" + id + ", accountNumber=" + accountNumber + ", type=" + type + ", amount=" + amount
+			+ ", currency=" + currency + ", accountFrom=" + accountFrom + "]";
 }
 
 
