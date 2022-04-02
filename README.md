@@ -32,6 +32,18 @@ There are only two REST APIs in this application, both of them are POST type whi
 `/pseudoqueue/sender` <br />
 `/pseudoqueue/receiver`
 
+### Request Body Format
+
+```shell
+{
+	"accountNumber": "1234",
+	"type": "credit",
+	"amount":"1000",
+	"currency":"INR",
+	"accountFrom":"9876543"
+}
+```
+
 ### API Response 
 #### Success
 ```shell
@@ -53,17 +65,6 @@ There are only two REST APIs in this application, both of them are POST type whi
 User will hit `/pseudoqueue/sender` API with transaction data and then application will pocess it by encrypting (base64) the data and then calling receiver API internally.
 Now, `/pseudoqueue/receiver` API will decrypt the data and save it to database.
 
-### Request Body Format
-
-```shell
-{
-	"accountNumber": "1234",
-	"type": "credit",
-	"amount":"1000",
-	"currency":"INR",
-	"accountFrom":"9876543"
-}
-```
 ## Deployment details
 
 The application has been deployed on AWS. You can check out from below URL =>
