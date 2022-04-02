@@ -27,10 +27,13 @@ mvn spring-boot:run
 
 ## Application end-points
 
-There are only two end points in this application, both of them are POST
+There are only two end points in this application, both of them are POST type 
 
-1) /natwest/sender
-2) /natwest/receiver
+1) /pseudoqueue/sender
+2) /pseudoqueue/receiver
+
+User will hit `/pseudoqueue/sender` ender API with transaction data and then application will pocess it by encrypting (base64) the data and then calling receiver API internally.
+Now, `/pseudoqueue/receiver` API will decrypt the data and save it to database.
 
 #### Request Body Format
 
