@@ -14,7 +14,7 @@ import com.natwestgroup.challenge.message.TrxnRequestBody;
 import com.natwestgroup.challenge.service.PseudoQueueService;
 
 @RestController
-@RequestMapping("/natwest")
+@RequestMapping("pseudoqueue")
 public class ReceiverController {
 
 	private static final Logger LOGGER = LogManager.getLogger(ReceiverController.class);
