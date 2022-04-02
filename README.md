@@ -11,10 +11,10 @@ For building and running the application you need:
 
 ## Running the application locally
 
-Before running, you need to configure below 3 properties in application.properties file=>
-###### spring.datasource.url=
-###### spring.datasource.username=
-###### spring.datasource.password=
+Before running, you need to configure below 3 properties in application.properties file, for DB connection=>
+###### spring.datasource.url
+###### spring.datasource.username
+###### spring.datasource.password
 ###### receiver.uri=http://127.0.0.1:8080/pseudoqueue/receiver
 `and then simply follow the below steps:` <br />
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.natwestgroup.challenge` class from your IDE.
