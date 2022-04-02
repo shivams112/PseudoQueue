@@ -27,10 +27,10 @@ mvn spring-boot:run
 
 ## Application end-points
 
-There are only two end points in this application, both of them are POST type 
+There are only two REST APIs in this application, both of them are POST type which expects JSON body.
 
-1) /pseudoqueue/sender
-2) /pseudoqueue/receiver
+`/pseudoqueue/sender`
+`/pseudoqueue/receiver`
 
 #### Application flow 
 User will hit `/pseudoqueue/sender` API with transaction data and then application will pocess it by encrypting (base64) the data and then calling receiver API internally.
