@@ -32,7 +32,8 @@ There are only two end points in this application, both of them are POST type
 1) /pseudoqueue/sender
 2) /pseudoqueue/receiver
 
-User will hit `/pseudoqueue/sender` ender API with transaction data and then application will pocess it by encrypting (base64) the data and then calling receiver API internally.
+#### Application flow 
+User will hit `/pseudoqueue/sender` API with transaction data and then application will pocess it by encrypting (base64) the data and then calling receiver API internally.
 Now, `/pseudoqueue/receiver` API will decrypt the data and save it to database.
 
 #### Request Body Format
