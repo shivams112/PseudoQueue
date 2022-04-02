@@ -43,3 +43,7 @@ There are only two end points in this application, both of them are POST
 	"accountFrom":"9876543"
 }
 ```
+### Deployment details
+
+The application has been deployed on AWS. You can check out from below URL =>
+#### http://natwestchallenge-env.eba-pb22h8uy.us-west-1.elasticbeanstalk.com/pseudoqueue/sender
