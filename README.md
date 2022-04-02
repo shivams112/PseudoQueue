@@ -47,7 +47,7 @@ Now, `/pseudoqueue/receiver` API will decrypt the data and save it to database.
 	"accountFrom":"9876543"
 }
 ```
-### Deployment details
+## Deployment details
 
 The application has been deployed on AWS. You can check out from below URL =>
 #### http://natwestchallenge-env.eba-pb22h8uy.us-west-1.elasticbeanstalk.com/pseudoqueue
