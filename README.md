@@ -29,7 +29,7 @@ mvn spring-boot:run
 
 There are only two REST APIs in this application, both of them are POST type which expects JSON body.
 
-`/pseudoqueue/sender`
+`/pseudoqueue/sender` <br />
 `/pseudoqueue/receiver`
 
 #### Application flow 
