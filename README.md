@@ -43,3 +43,17 @@ There are only two end points in this application, both of them are POST
 	"accountFrom":"9876543"
 }
 ```
+### Deployment details
+
+The application has been deployed on AWS. You can check out from below URL =>
+#### http://natwestchallenge-env.eba-pb22h8uy.us-west-1.elasticbeanstalk.com/pseudoqueue
+
+#### Live Application Database details
+I am also providing database details of live application, so that anyone can check whether the correct data is going or not. This is
+just for testing purpose
+```shell
+DB IP: database-1.cnmk451yynwm.us-west-1.rds.amazonaws.com
+usernam: root
+password: password
+DB Name: natwest
+Table Name: pseudo_transaction
