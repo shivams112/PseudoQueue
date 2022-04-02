@@ -50,16 +50,10 @@ public class PseudoQueueServiceImpl implements PseudoQueueService {
 			LOGGER.info("processSenderRequest(): Data Encrypted successfully, going to hit Receiver API==> URL: "+URI);
 			RestTemplate restTemplate = new RestTemplate();
 		    try {
-
-			      HttpHeaders headers = new HttpHeaders();
-			      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-			      HttpEntity<TrxnRequestBody> entity = new HttpEntity<TrxnRequestBody>(encryptedReq,headers);
-
-			      String response  = restTemplate.exchange(
-			    		  URI, HttpMethod.POST, entity, String.class).getBody();
+		    	Response response = restTemplate.postForObject(URI, encryptedReq, Response.class);
 			      
 			      LOGGER.info("processSenderRequest(): Receiver API response= "+response);
-			      if(response.contains("success")) {
+			      if(response.getResultCode() ==0 ) {
 						res.setResult("success");
 						res.setResultCode(0);
 			      }

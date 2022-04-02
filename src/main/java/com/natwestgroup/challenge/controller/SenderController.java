@@ -26,7 +26,7 @@ public class SenderController {
 	/* POST API to accept 
 	 * data from user 
 	*/
-	@PostMapping("/send")
+	@PostMapping("/sender")
 	public Response addTransaction(@RequestBody TrxnRequestBody request){
 		LOGGER.info("addTransaction(): controller called, trxn="+request);
 		return mPseudoQueueService.processSenderRequest(request);
