@@ -34,9 +34,9 @@ public class SenderController {
 	
 	
 	//for testing purpose
-	@GetMapping("/test")
+	@GetMapping("")
 	public String test(){
 		LOGGER.info("test(): controller called");
-		return "Test Called";
+		return "Available end points: /sender  and /receiver";
 	}
 }
