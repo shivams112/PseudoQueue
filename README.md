@@ -15,7 +15,7 @@ Before running, you need to configure below 3 properties in application.properti
 ###### spring.datasource.url=
 ###### spring.datasource.username=
 ###### spring.datasource.password=
-###### receiver.uri=http://127.0.0.1:8080/natwest/receiver
+###### receiver.uri=http://127.0.0.1:8080/pseudoqueue/receiver
 `and then simply follow the below steps:` <br />
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.natwestgroup.challenge` class from your IDE.
 
