@@ -39,6 +39,11 @@ public class TrxnRequestBody {
 	public void setAccountFrom(String accountFrom) {
 		this.accountFrom = accountFrom;
 	}
+	@Override
+	public String toString() {
+		return "TrxnRequestBody [accountNumber=" + accountNumber + ", type=" + type + ", amount=" + amount
+				+ ", currency=" + currency + ", accountFrom=" + accountFrom + "]";
+	}
 	
 	
 }

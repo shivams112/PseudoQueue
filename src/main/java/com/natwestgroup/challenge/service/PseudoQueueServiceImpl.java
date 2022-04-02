@@ -4,14 +4,25 @@ import java.util.Base64;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import com.natwestgroup.challenge.dao.TransactionRepository;
+import com.natwestgroup.challenge.entities.Transaction;
 import com.natwestgroup.challenge.message.Response;
 import com.natwestgroup.challenge.message.TrxnRequestBody;
 
 @Component
 public class PseudoQueueServiceImpl implements PseudoQueueService {
 	private static final Logger LOGGER = LogManager.getLogger(PseudoQueueServiceImpl.class);
+	
+	@Value("${receiver.uri}:{null}")
+	private String URI;
+	
+	@Autowired
+	private TransactionRepository mTransactionRepository;
 
 	@Override
 	public Response processSenderRequest(TrxnRequestBody request) {
@@ -19,15 +30,34 @@ public class PseudoQueueServiceImpl implements PseudoQueueService {
 		Response res = new Response();
 		res.setResultCode(1);
 		res.setResult("Fail");
+		TrxnRequestBody encryptedReq = null;
 		
 		try {
 			
-			LOGGER.info("processSenderRequest(): Account Num before: "+request.getAccountNumber());
-			request.setAccountNumber(encodeString(request.getAccountNumber()));
-			LOGGER.info("processSenderRequest(): Account Num after: "+request.getAccountNumber());
+			LOGGER.info("processSenderRequest(): Encrypting the request");
+			encryptedReq = new TrxnRequestBody();
+			encryptedReq.setAccountNumber(encodeString(request.getAccountNumber()));
+			encryptedReq.setAccountFrom(encodeString(request.getAccountFrom()));
+			encryptedReq.setAmount(encodeString(request.getAmount()));
+			encryptedReq.setType(encodeString(request.getType()));
+			encryptedReq.setCurrency(encodeString(request.getCurrency()));
 			
+			LOGGER.info("processSenderRequest(): Data Encrypted successfully, going to hit Receiver API");
+
+		    RestTemplate restTemplate = new RestTemplate();
+		    String result = restTemplate.postForObject(URI, encryptedReq, String.class);
+		   //  jsonResponse = 
+		    
+		    try {
+               // jsonResponse = new JSONObject(result);
+                
+		    } catch (Exception e) {
+		    	LOGGER.info("processSenderRequest(): JSON Exception");
+		    	e.printStackTrace();
+		    }
+						
 		} catch (Exception e) {
-			LOGGER.error("processSenderRequest() exception e");
+			LOGGER.error("processSenderRequest() exception " + e);
 		} finally {
 			LOGGER.info("processSenderRequest(): Exit");
 		}
@@ -37,8 +67,32 @@ public class PseudoQueueServiceImpl implements PseudoQueueService {
 
 	@Override
 	public Response processReceiverRequest(TrxnRequestBody request) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("processReceiverRequest(): Enter");
+		Response res = new Response();
+		res.setResultCode(1);
+		res.setResult("Fail");
+		Transaction transaction = null;
+        try {
+        	
+        	LOGGER.info("processReceiverRequest(): Decrypting the request");
+			transaction = new Transaction();
+			transaction.setAccountNumber(decodeString(request.getAccountNumber()));
+			transaction.setAccountFrom(decodeString(request.getAccountFrom()));
+			transaction.setAmount(decodeString(request.getAmount()));
+			transaction.setType(decodeString(request.getType()));
+			transaction.setCurrency(decodeString(request.getCurrency()));
+			LOGGER.info("processReceiverRequest(): Decrypting success, going to save in DB");
+			mTransactionRepository.save(transaction);
+			res.setResult("success");
+			res.setResultCode(0);
+        	
+        } catch (Exception e) {
+        	LOGGER.error("processReceiverRequest() exception " + e);
+        	
+        } finally {
+        	LOGGER.info("processReceiverRequest(): Exit");
+        }
+		return res;
 	}
 	
 	
