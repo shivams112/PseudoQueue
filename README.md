@@ -16,7 +16,7 @@ Before running, you need to configure below 3 properties in application.properti
 ###### spring.datasource.username=
 ###### spring.datasource.password=
 ###### receiver.uri=http://127.0.0.1:8080/natwest/receiver
-`and then simply follow the below steps`
+`and then simply follow the below steps:` <br />
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.natwestgroup.challenge` class from your IDE.
 
 Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
